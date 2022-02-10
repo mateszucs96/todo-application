@@ -23,7 +23,11 @@ const todos = [];
 
 console.log(switchDarkMode.src)
 const handleSwitchMode = (e) => {
-    e.target.src = './images/icon-moon.svg';
+    if (e.target.attributes.src.value === './images/icon-sun.svg') {
+        e.target.src = './images/icon-moon.svg'
+    } else {
+        e.target.src = './images/icon-sun.svg'
+    }
 }
 
 const addNewToDo = (e) => {
