@@ -36,8 +36,6 @@ body {
     
 }
 
-
-
 header {
     background-image: url('./images/bg-mobile-dark.jpg');
     background-repeat: no-repeat;
@@ -78,8 +76,6 @@ header {
     background-color: var(--darkmode-very-dark-desat-blue)
 }
 
-
-
 .check-circle {    
     height: 1.5rem;
     width: 1.5rem;
@@ -87,13 +83,12 @@ header {
     border-radius: 50%;
     border: 1px solid var(--darkmode-light-grayish-blue);
     position: absolute;
-    margin: 0 1.2rem;    
+    left: 2rem;
 }
 
 main {
     background-color: var(--darkmode-very-dark-blue);
-    padding: 0 1rem 4rem 1rem;
-    
+    padding: 0 1rem 4rem 1rem;    
 }
 
 .list-style {
@@ -118,6 +113,5 @@ main {
 
 .items-container__item-info {
     color: var(--darkmode-dark-grayish-blue);
-    background-color: var(--darkmode-very-dark-desat-blue);
-    
+    background-color: var(--darkmode-very-dark-desat-blue);    
 }
