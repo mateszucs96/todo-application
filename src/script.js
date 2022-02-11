@@ -10,10 +10,7 @@ const todoContainer = document.querySelector('.items-container');
 const itemCounter = document.querySelector('.item-counter');
 
 const todos = [];
-let crossIcon = [];
 
-
-console.log(switchDarkMode.src)
 const handleSwitchMode = (e) => {
     if (e.target.attributes.src.value === './images/icon-sun.svg') {
         e.target.src = './images/icon-moon.svg'
@@ -22,14 +19,14 @@ const handleSwitchMode = (e) => {
     }
 }
 
+const updateToDoCounter = () => itemCounter.textContent = `${todos.length} items left`;
+
 const addNewToDo = (e) => {
     //prevent to reload
     e.preventDefault();
     // push the input value to the "todos" array
     todos.push(input.value);
     displayToDo();
-
-    crossIcon = document.querySelectorAll('.cross-icon');
 
     //set the input field empty
     input.value = '';
@@ -46,12 +43,11 @@ const displayToDo = () => {
         </h4>
         <img class="cross-icon" data-number="${todos.length - 1}" src="./images/icon-cross.svg" />
     </div>
-`
+    `
+
     todoContainer.insertAdjacentHTML('afterbegin', html);
 
-    // const crossIcon = document.querySelectorAll('.cross-icon');
-    // crossIcon.forEach((el, i) => el.addEventListener('click', () => console.log('clicked')));
-    // console.log(crossIcon);
+    updateToDoCounter();
 }
 
 const deleteToDo = (e) => {
@@ -61,14 +57,16 @@ const deleteToDo = (e) => {
         todos.splice(index, 1);
         //remove the element from the todos list
         e.target.parentNode.remove();
+        updateToDoCounter();
     }
 };
 
-todoContainer.addEventListener('click', deleteToDo);
 
-
-
-console.log(crossIcon)
+//Dark and Light mode toggle
 switchDarkMode.addEventListener('click', handleSwitchMode);
 
+//Add new ToDo
 form.addEventListener('submit', addNewToDo);
+
+//Delete ToDo
+todoContainer.addEventListener('click', deleteToDo);
