@@ -2,7 +2,7 @@
 
 :root {
     --primary-bright-blue: hsl(220, 98%, 61%);
-    --primary-check-bg: linear-gradient hsl(192, 100%, 67%) to hsl(280, 87%, 65%);
+    --primary-check-bg: linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%));
 
     --lightmode-gray: hsl(0, 0%, 98%);
     --lightmode-grayish-blue: hsl(236, 33%, 92%);
@@ -30,10 +30,14 @@
     padding: 0;
 }
 
+h4 {
+    font-weight: 700;
+}
+
 body {
     font-family: 'Josefin Sans', sans-serif;
     color: var(--darkmode-light-grayish-blue);
-    
+    font-weight: 700;
 }
 
 header {
@@ -84,8 +88,13 @@ header {
     border-radius: 50%;
     border: 1px solid var(--darkmode-light-grayish-blue);
     position: absolute;
-    left: 2rem;
-    
+    left: 2rem;    
+}
+
+.completed {
+    background: url('./images/icon-check.svg'), var(--primary-check-bg);
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 main {

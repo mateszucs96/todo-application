@@ -62,6 +62,36 @@ const deleteToDo = (e) => {
 };
 
 
+const markItems = (e) => {
+    if (e.target.parentNode.children[0].classList.contains('completed')) {
+        //remove the check mark
+        e.target.parentNode.children[0].classList.remove('completed');
+        //remove the line-through 
+        e.target.parentNode.children[1].style.textDecoration = 'none';
+        // remove the element on the todos array
+        const index = todos.indexOf(e.target.parentNode.children[1].textContent.trim());
+        todos.splice(index, 0, e.target.parentNode.children[1].textContent.trim());
+        updateToDoCounter();
+        return;
+    }
+
+    if (e.target.parentNode.children[0].classList.contains('check-circle')) {
+        //add the check mark
+        e.target.parentNode.children[0].classList.add('completed')
+        // add the line-through
+        e.target.parentNode.children[1].style.textDecoration = 'line-through';
+        // push back the element to the todos array
+        const index = todos.indexOf(e.target.parentNode.children[1].textContent.trim());
+        todos.splice(index, 1);
+
+        updateToDoCounter();
+        return;
+    }
+
+
+}
+
+
 //Dark and Light mode toggle
 switchDarkMode.addEventListener('click', handleSwitchMode);
 
@@ -70,3 +100,7 @@ form.addEventListener('submit', addNewToDo);
 
 //Delete ToDo
 todoContainer.addEventListener('click', deleteToDo);
+
+//Mark ToDo 
+todoContainer.addEventListener('click', markItems);
+
