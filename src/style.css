@@ -4,18 +4,18 @@
     --primary-bright-blue: hsl(220, 98%, 61%);
     --primary-check-bg: linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%));
 
+    --clr-100: hsl(236, 33%, 92%);
+    --clr-200:  hsl(234, 39%, 85%);
+    --clr-400:  hsl(234, 11%, 52%);
+    --clr-500:  hsl(233, 14%, 35%);
+    --clr-600:  hsl(235, 24%, 19%);
+    --clr-700:  hsl(235, 21%, 11%);
+
     --lightmode-gray: hsl(0, 0%, 98%);
     --lightmode-grayish-blue: hsl(236, 33%, 92%);
     --lightmode-light-grayish-blue: hsl(233, 11%, 84%);
     --lightmode-dark-grayish-blue: hsl(236, 9%, 61%);
     --lightmode-very-dark-grayish-blue: hsl(235, 19%, 35%);
-
-    --darkmode-very-dark-blue: hsl(235, 21%, 11%);
-    --darkmode-very-dark-desat-blue: hsl(235, 24%, 19%);
-    --darkmode-light-grayish-blue: hsl(234, 39%, 85%);
-    --darkmode-hover: hsl(236, 33%, 92%);
-    --darkmode-dark-grayish-blue: hsl(234, 11%, 52%);
-    --darkmode-very-dark-grayish-blue: hsl(233, 14%, 35%);
 }
 
 
@@ -30,14 +30,22 @@
     padding: 0;
 }
 
+.light-mode {
+    --clr-600: hsl(0, 0%, 98%);
+    --clr-700: hsl(236, 33%, 92%);
+}
+
+
+
 h4 {
     font-weight: 700;
 }
 
 body {
     font-family: 'Josefin Sans', sans-serif;
-    color: var(--darkmode-light-grayish-blue);
-    font-weight: 700;
+    color: var(--clr-400);
+    font-weight: 400;
+    
 }
 
 header {
@@ -48,6 +56,12 @@ header {
     padding: 2rem 1rem;    
 }
 
+.main-container {
+    display: flex; 
+    flex-direction: column;
+    margin: 0 auto;
+}
+
 .title-container {
     display: flex;
     justify-content: space-between;
@@ -56,7 +70,7 @@ header {
 }
 
 .title-container > h1 {
-    color: var(--darkmode-light-grayish-blue);
+    color: var(--clr-200);
     letter-spacing: 1rem;
     
 }
@@ -72,13 +86,29 @@ header {
     align-items: center;
 }
 
+.form-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0 1.5rem;
+    background-color: var(--clr-600);
+}
+
+
+
 .input-container input {
     width: 100%;
     height: 45px;
     border: none;
     border-radius: 5px;
-    padding: 0 3.5rem;
-    background-color: var(--darkmode-very-dark-desat-blue)
+    
+    background-color: var(--clr-600)
+}
+
+.input-container input:focus {
+    outline: none;
+    caret-color: var(--primary-bright-blue);
+    color: var(--clr-100);
 }
 
 .check-circle {    
@@ -86,9 +116,16 @@ header {
     width: 1.5rem;
     background-color: transparent;
     border-radius: 50%;
-    border: 1px solid var(--darkmode-light-grayish-blue);
-    position: absolute;
-    left: 2rem;    
+    border: 1px solid var(--clr-200);
+    margin-right: 1.5rem;
+}
+.check-circle:hover {
+    cursor: pointer;
+    
+}
+
+.input-container .check-circle {
+    width: 1.5rem;
 }
 
 .completed {
@@ -98,7 +135,7 @@ header {
 }
 
 main {
-    background-color: var(--darkmode-very-dark-blue);
+    background-color: var(--clr-700);
     padding: 0 1rem 2rem 1rem;    
 }
 
@@ -114,22 +151,29 @@ main {
 .items-container {
     border: none;
     border-radius: 10px;    
-    background-color: var(--darkmode-very-dark-desat-blue)
+    background-color: var(--clr-600)
 }
 
-.items-container__item-container {    
-    border-bottom: 1px solid white;
-    background-color: var(--darkmode-very-dark-desat-blue);
+.items-container__item-container {
+    display: flex;
+    border-bottom: 1px solid var(--clr-200);
+    background-color: var(--clr-600);
+    color: var(--clr-400);
+    font-weight: 400;
 }
 
 .items-container__item-container h4 {
-    margin-left: 2rem;
+    margin-right: auto;
+}
+
+.items-container__item-container h4:hover {
+    cursor: pointer;
 }
 
 
 .items-container__item-info {
     color: var(--darkmode-dark-grayish-blue);
-    background-color: var(--darkmode-very-dark-desat-blue);
+    background-color: var(--clr-600);
     display: flex; 
     width: 100%;
     height: 45px;
@@ -137,15 +181,33 @@ main {
     justify-content: space-between;
     padding: 0 1.5rem;
 }
+.items-container__item-info > p:hover {
+    cursor: pointer;
+}
 
 .selector-container {
     display: flex; 
     width: 100%;
     height: 45px;
-    background-color: var(--darkmode-very-dark-desat-blue);
+    background-color: var(--clr-600);
     margin-top: 1rem;
     align-items: center;
     justify-content: center;
     column-gap: 2rem;
     border-radius: 5px;
+    font-weight: 700;
+}
+
+.selector-container > p:hover {
+    cursor: pointer;
+    color: var(--clr-100);
+}
+
+.active {
+    color: var(--primary-bright-blue);
+}
+
+
+@media screen and (min-width: 880px) {
+    
 }

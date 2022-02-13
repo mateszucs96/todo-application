@@ -1,21 +1,26 @@
 'use strict';
 
 
-
+const body = document.querySelector('body');
 const switchDarkMode = document.querySelector('.switch-dark-mode');
 const addInput = document.querySelector('.input-container .check-circle');
 const input = document.querySelector('.input-container input');
 const form = document.querySelector('.form-container');
 const todoContainer = document.querySelector('.items-container');
 const itemCounter = document.querySelector('.item-counter');
+const headerContainer = document.querySelector('.header-container');
 
 const todos = [];
 
 const handleSwitchMode = (e) => {
     if (e.target.attributes.src.value === './images/icon-sun.svg') {
-        e.target.src = './images/icon-moon.svg'
+        e.target.src = './images/icon-moon.svg';
+        body.classList.add('light-mode');
+        headerContainer.style.backgroundImage = 'url("./images/bg-mobile-light.jpg")';
     } else {
-        e.target.src = './images/icon-sun.svg'
+        e.target.src = './images/icon-sun.svg';
+        body.classList.remove('light-mode');
+        headerContainer.style.backgroundImage = 'url("./images/bg-mobile-dark.jpg")';
     }
 }
 
@@ -37,7 +42,8 @@ const addNewToDo = (e) => {
 const displayToDo = () => {
     const html = `
     <div class="items-container__item-container list-style">
-        <div class="check-circle"></div>
+        <div class="check-circle">
+        </div>    
         <h4>
             ${input.value}
         </h4>
@@ -114,8 +120,3 @@ form.addEventListener('submit', addNewToDo);
 
 //Delete ToDo and Mark items handler
 todoContainer.addEventListener('click', eventHandler);
-
-
-
-
-
