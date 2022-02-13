@@ -51,18 +51,23 @@ const displayToDo = () => {
 }
 
 const deleteToDo = (e) => {
+    console.log(e)
+
     if (e.target.classList.contains('cross-icon')) {
+
         //remove the element from the todos array
         const index = todos.indexOf(e.target.parentNode.children[1].textContent.trim());
         todos.splice(index, 1);
         //remove the element from the todos list
         e.target.parentNode.remove();
         updateToDoCounter();
+        console.log(todos)
     }
 };
 
 
 const markItems = (e) => {
+    console.log(e)
     if (e.target.parentNode.children[0].classList.contains('completed')) {
         //remove the check mark
         e.target.parentNode.children[0].classList.remove('completed');
@@ -80,7 +85,7 @@ const markItems = (e) => {
         e.target.parentNode.children[0].classList.add('completed')
         // add the line-through
         e.target.parentNode.children[1].style.textDecoration = 'line-through';
-        // push back the element to the todos array
+        //push back the element to the todos array
         const index = todos.indexOf(e.target.parentNode.children[1].textContent.trim());
         todos.splice(index, 1);
 
@@ -91,6 +96,15 @@ const markItems = (e) => {
 
 }
 
+// handle the markItems and deleteToDo on the same container
+function eventHandler(e) {
+    if (e.target.classList.contains('check-circle')) {
+        markItems(e);
+    }
+    if (e.target.classList.contains('cross-icon')) {
+        deleteToDo(e);
+    }
+}
 
 //Dark and Light mode toggle
 switchDarkMode.addEventListener('click', handleSwitchMode);
@@ -98,9 +112,10 @@ switchDarkMode.addEventListener('click', handleSwitchMode);
 //Add new ToDo
 form.addEventListener('submit', addNewToDo);
 
-//Delete ToDo
-todoContainer.addEventListener('click', deleteToDo);
+//Delete ToDo and Mark items handler
+todoContainer.addEventListener('click', eventHandler);
 
-//Mark ToDo 
-todoContainer.addEventListener('click', markItems);
+
+
+
 
