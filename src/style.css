@@ -107,11 +107,10 @@ header {
 
 
 .input-container input {
-    width: 100%;
+    width: 25rem;
     height: 45px;
     border: none;
-    border-radius: 5px;
-    
+    border-radius: 5px;    
     background-color: var(--clr-600)
 }
 
@@ -206,14 +205,11 @@ main {
     align-items: center;
     justify-content: center;
     column-gap: 2rem;
-    border-radius: 5px;
+    border-radius: 8px;
     font-weight: 700;
 }
 
-.selector-container > p:hover {
-    cursor: pointer;
-    color: var(--clr-100);
-}
+
 
 .active {
     color: var(--primary-bright-blue);
@@ -221,5 +217,8 @@ main {
 
 
 @media screen and (min-width: 880px) {
-    
+    .selector-container > p:hover {
+    cursor: pointer;
+    color: var(--clr-100);
+}
 }
