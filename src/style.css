@@ -45,6 +45,12 @@ body {
     font-family: 'Josefin Sans', sans-serif;
     color: var(--clr-400);
     font-weight: 400;
+    background-color: var(--clr-700);
+}
+
+.body-container {
+    display: grid;
+    grid-template-rows: 50px 83px 83px 1fr 1fr;
     
 }
 
@@ -52,21 +58,23 @@ header {
     background-image: url('./images/bg-mobile-dark.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-    height: 200px;
-    padding: 2rem 1rem;    
+    height: 220px;
+    padding: 2rem 1rem;
+    
 }
 
 .main-container {
     display: flex; 
     flex-direction: column;
     margin: 0 auto;
+     
 }
 
 .title-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1.3rem;
 }
 
 .title-container > h1 {
@@ -91,7 +99,9 @@ header {
     align-items: center;
     width: 100%;
     padding: 0 1.5rem;
+    margin-bottom: 2rem;
     background-color: var(--clr-600);
+    border-radius: 8px;
 }
 
 
@@ -134,9 +144,9 @@ header {
     background-position: center;
 }
 
-main {
-    background-color: var(--clr-700);
-    padding: 0 1rem 2rem 1rem;    
+main {    
+    padding: 0 1rem 2rem 1rem;
+    grid-row: 2 / -1;    
 }
 
 .list-style {
@@ -151,7 +161,8 @@ main {
 .items-container {
     border: none;
     border-radius: 10px;    
-    background-color: var(--clr-600)
+    background-color: var(--clr-600);
+    border-collapse: separate;
 }
 
 .items-container__item-container {
@@ -180,6 +191,7 @@ main {
     align-items: center;
     justify-content: space-between;
     padding: 0 1.5rem;
+    
 }
 .items-container__item-info > p:hover {
     cursor: pointer;
