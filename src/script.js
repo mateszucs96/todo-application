@@ -12,6 +12,7 @@ const headerContainer = document.querySelector('.header-container');
 const selectorContainer = document.querySelector('.selector-container');
 
 const todos = [];
+let completed = [];
 let todosCopy = [];
 let completedArr = [];
 
@@ -29,26 +30,30 @@ function handleSwitchMode(e) {
     }
 }
 
-const updateToDoCounter = (arr) => itemCounter.textContent = `${arr.length} items left`;
+
 
 const addNewToDo = (e) => {
     //prevent to reload
     e.preventDefault();
     // push the input value to the "todos" array
-    todos.push(input.value);
+    todos.push(input.value)
+    todosCopy = [...todos]
     displayToDo(todos);
-
-    //set the input field empty
+    displayCounter(todos);
+    //set the input field empty 
     input.value = '';
+}
 
-
+const displayCounter = (arr) => {
+    console.log(arr, arr)
+    itemCounter.textContent = `${arr.length} items left`;
 }
 
 const displayToDo = (arr) => {
     todoContainer.textContent = '';
 
     arr.forEach((el) => {
-        const type = arr === completedArr ? 'completed' : '';
+        const type = arr === completed ? 'completed' : '';
         const html = `
             <div class="items-container__item-container list-style">
                 <div class="check-circle ${type}"></div>
@@ -59,22 +64,18 @@ const displayToDo = (arr) => {
             </div>
             `
         todoContainer.insertAdjacentHTML('afterbegin', html);
-        console.log()
+
     });
 
-
-    updateToDoCounter(arr);
 };
 
-
-const reRenderToDo = (e) => {
-    todoContainer.textContent = '';
-    console.log(completedArr)
-    displayToDo(completedArr)
+const updateUI = arr => {
+    displayCounter(arr);
+    displayToDo(arr);
 }
 
 const deleteToDo = (e) => {
-    console.log(e)
+
 
     if (e.target.classList.contains('cross-icon')) {
 
@@ -83,41 +84,38 @@ const deleteToDo = (e) => {
         todos.splice(index, 1);
         //remove the element from the todos list
         e.target.parentNode.remove();
-        updateToDoCounter(todos);
+        displayCounter(todos);
 
     }
 };
 
 
 const markItems = (e) => {
-    todosCopy = [...todos];
-    if (e.target.parentNode.children[0].classList.contains('completed')) {
-        //remove the check mark
-        e.target.parentNode.children[0].classList.remove('completed');
-        //remove the line-through 
-        e.target.parentNode.children[1].style.textDecoration = 'none';
-        // remove the element on the todos array
-        const index = todosCopy.indexOf(e.target.parentNode.children[1].textContent.trim());
-        completedArr.splice(index, 1);
-        updateToDoCounter(completedArr);
-
-        console.log(todos)
-        return;
-    }
-
-    if (e.target.parentNode.children[0].classList.contains('check-circle')) {
+    const selectedTodo = e.target.parentNode.children[1].textContent.trim();
+    const index = todosCopy.indexOf(selectedTodo);
+    if (!e.target.parentNode.children[0].classList.contains('completed')) {
         //add the check mark
         e.target.parentNode.children[0].classList.add('completed')
         // add the line-through
         e.target.parentNode.children[1].style.textDecoration = 'line-through';
-        //push back the element to the todos array
-        const index = todosCopy.indexOf(e.target.parentNode.children[1].textContent.trim());
-        completedArr.push(...todosCopy.splice(index, 1));
-        updateToDoCounter(todos);
+        //push back the element to the todos array        
+        completed = [...completed, ...todosCopy.splice(index, 1)];
+        console.log(todosCopy)
+        displayCounter(todosCopy);
 
-        console.log(todos)
-        return;
+    } else {
+        //add the check mark
+        e.target.parentNode.children[0].classList.remove('completed')
+        // add the line-through
+        e.target.parentNode.children[1].style.textDecoration = 'none';
+        //push back the element to the todos array
+        const index = todosCopy.indexOf(selectedTodo);
+        todosCopy.splice(index, 0, selectedTodo);
+        completed.splice(completed.indexOf(selectedTodo), 1)
+        displayCounter(todosCopy);
     }
+    console.log(completed)
+
 
 
 }
@@ -129,6 +127,7 @@ const eventHandler = (e) => {
     }
     if (e.target.classList.contains('cross-icon')) {
         deleteToDo(e);
+
     }
 }
 
@@ -138,19 +137,19 @@ const setActiveSelector = (e) => {
         Array.from(e.target.parentNode.children).forEach(el => el.classList.remove('active'));
         e.target.classList.add('active');
         todoContainer.textContent = '';
-        displayToDo(completedArr.reverse());
+        updateUI(completed)
     }
     if (e.target.classList.contains('selector-all')) {
         Array.from(e.target.parentNode.children).forEach(el => el.classList.remove('active'));
         e.target.classList.add('active');
         todoContainer.textContent = '';
-        displayToDo(todos);
+        updateUI(todos);
     }
     if (e.target.classList.contains('selector-active')) {
         Array.from(e.target.parentNode.children).forEach(el => el.classList.remove('active'));
         e.target.classList.add('active');
         todoContainer.textContent = '';
-        displayToDo(todosCopy);
+        updateUI(todosCopy);
     }
 };
 
