@@ -13,12 +13,6 @@ const selectorContainer = document.querySelector('.selector-container');
 
 const todos = [];
 let completed = [];
-let todosCopy = [];
-let completedArr = [];
-
-
-
-
 
 function handleSwitchMode(e) {
     if (e.target.attributes.src.value === './images/icon-sun.svg') {
@@ -37,30 +31,29 @@ function handleSwitchMode(e) {
 const addNewToDo = (e) => {
     //prevent to reload
     e.preventDefault();
-    // push the input value to the "todos" array
-    todos.push(input.value)
-    todosCopy = [...todos]
-    displayToDo(todos);
-    displayCounter(todos);
+    // push the input value and the "state" to the "todos" array
+    todos.push({ text: `${input.value}`, isCompleted: false })
+    // update the screen
+    updateUI(todos)
     //set the input field empty 
     input.value = '';
 }
 
-const displayCounter = (arr) => {
-    console.log(arr, arr)
-    itemCounter.textContent = `${arr.length} items left`;
-}
+// display the item counter
+const displayCounter = (arr) => itemCounter.textContent = `${arr.length} items left`;
 
+// display the list
 const displayToDo = (arr) => {
     todoContainer.textContent = '';
 
     arr.forEach((el) => {
-        const type = arr === completed ? 'completed' : '';
+        const type = el.isCompleted === true ? 'completed' : '';
+
         const html = `
             <div class="items-container__item-container list-style">
                 <div class="check-circle ${type}"></div>
                 <h4>
-                    ${el}
+                    ${el.text}
                 </h4>
                 <img class="cross-icon" src="./images/icon-cross.svg" />
             </div>
@@ -71,14 +64,13 @@ const displayToDo = (arr) => {
 
 };
 
+// wrapper function to display
 const updateUI = arr => {
     displayCounter(arr);
     displayToDo(arr);
 }
 
 const deleteToDo = (e) => {
-
-
     if (e.target.classList.contains('cross-icon')) {
 
         //remove the element from the todos array
@@ -94,44 +86,43 @@ const deleteToDo = (e) => {
 
 const markItems = (e) => {
     const selectedTodo = e.target.parentNode.children[1].textContent.trim();
-    const index = todosCopy.indexOf(selectedTodo);
     if (!e.target.parentNode.children[0].classList.contains('completed')) {
         //add the check mark
         e.target.parentNode.children[0].classList.add('completed')
         // add the line-through
         e.target.parentNode.children[1].style.textDecoration = 'line-through';
-        //push back the element to the todos array        
-        completed = [...completed, ...todosCopy.splice(index, 1)];
-        console.log(todosCopy)
-        displayCounter(todosCopy);
+        // change the state to completed
+        todos.forEach((el, i) => {
+            if (el.text === selectedTodo) el.isCompleted = true;
+        })
+        completed = todos.filter((el => el.isCompleted === true));
+        displayCounter(todos);
 
     } else {
         //add the check mark
         e.target.parentNode.children[0].classList.remove('completed')
         // add the line-through
         e.target.parentNode.children[1].style.textDecoration = 'none';
-        //push back the element to the todos array
-        const index = todosCopy.indexOf(selectedTodo);
-        todosCopy.splice(index, 0, selectedTodo);
-        completed.splice(completed.indexOf(selectedTodo), 1)
-        displayCounter(todosCopy);
-    }
-    console.log(completed)
 
-
-
-}
+        // change the state to not completed
+        todos.forEach((el, i) => {
+            if (el.text === selectedTodo) el.isCompleted = false;
+        });
+        completed = todos.filter((el => el.isCompleted === true));
+        displayCounter(todos);
+    };
+};
 
 // handle the markItems and deleteToDo on the same container
 const eventHandler = (e) => {
     if (e.target.classList.contains('check-circle')) {
         markItems(e);
-    }
+    };
     if (e.target.classList.contains('cross-icon')) {
         deleteToDo(e);
 
-    }
-}
+    };
+};
 
 const setActiveSelector = (e) => {
     console.log(e.target.textContent)
@@ -145,13 +136,13 @@ const setActiveSelector = (e) => {
         Array.from(e.target.parentNode.children).forEach(el => el.classList.remove('active'));
         e.target.classList.add('active');
         todoContainer.textContent = '';
-        updateUI(completed = [...completed, ...todosCopy]);
+        updateUI(todos);
     }
     if (e.target.classList.contains('selector-active')) {
         Array.from(e.target.parentNode.children).forEach(el => el.classList.remove('active'));
         e.target.classList.add('active');
         todoContainer.textContent = '';
-        updateUI(todosCopy);
+        updateUI(todos.filter(el => el.isCompleted === false));
     }
 };
 
