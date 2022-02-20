@@ -18,6 +18,8 @@ let completedArr = [];
 
 
 
+
+
 function handleSwitchMode(e) {
     if (e.target.attributes.src.value === './images/icon-sun.svg') {
         e.target.src = './images/icon-moon.svg';
@@ -143,7 +145,7 @@ const setActiveSelector = (e) => {
         Array.from(e.target.parentNode.children).forEach(el => el.classList.remove('active'));
         e.target.classList.add('active');
         todoContainer.textContent = '';
-        updateUI(todos);
+        updateUI(completed = [...completed, ...todosCopy]);
     }
     if (e.target.classList.contains('selector-active')) {
         Array.from(e.target.parentNode.children).forEach(el => el.classList.remove('active'));
