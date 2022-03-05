@@ -12,7 +12,6 @@ const headerContainer = document.querySelector('.header-container');
 const selectorContainer = document.querySelector('.selector-container');
 
 const todos = [];
-let completed = [];
 
 function handleSwitchMode(e) {
     if (e.target.attributes.src.value === './images/icon-sun.svg') {
@@ -48,11 +47,11 @@ const displayToDo = (arr) => {
 
     arr.forEach((el) => {
         const type = el.isCompleted === true ? 'completed' : '';
-
+        const style = el.isCompleted ? 'line' : '';
         const html = `
             <div class="items-container__item-container list-style">
                 <div class="check-circle ${type}"></div>
-                <h4>
+                <h4 class="${style}">
                     ${el.text}
                 </h4>
                 <img class="cross-icon" src="./images/icon-cross.svg" />
@@ -72,14 +71,16 @@ const updateUI = arr => {
 
 const deleteToDo = (e) => {
     if (e.target.classList.contains('cross-icon')) {
-
         //remove the element from the todos array
-        const index = todos.indexOf(e.target.parentNode.children[1].textContent.trim());
-        todos.splice(index, 1);
+        todos.forEach((el, i) => {
+            el.text === e.target.parentNode.children[1].textContent.trim() && todos.splice(i, 1)
+        })
+
+
         //remove the element from the todos list
         e.target.parentNode.remove();
         displayCounter(todos);
-
+        console.log(todos)
     }
 };
 
@@ -95,8 +96,7 @@ const markItems = (e) => {
         todos.forEach((el, i) => {
             if (el.text === selectedTodo) el.isCompleted = true;
         })
-        completed = todos.filter((el => el.isCompleted === true));
-        displayCounter(todos);
+        displayCounter(todos.filter(el => el.isCompleted === false));
 
     } else {
         //add the check mark
@@ -108,8 +108,7 @@ const markItems = (e) => {
         todos.forEach((el, i) => {
             if (el.text === selectedTodo) el.isCompleted = false;
         });
-        completed = todos.filter((el => el.isCompleted === true));
-        displayCounter(todos);
+        displayCounter(todos.filter(el => el.isCompleted === false));
     };
 };
 
@@ -130,7 +129,7 @@ const setActiveSelector = (e) => {
         Array.from(e.target.parentNode.children).forEach(el => el.classList.remove('active'));
         e.target.classList.add('active');
         todoContainer.textContent = '';
-        updateUI(completed)
+        updateUI(todos.filter(el => el.isCompleted === true))
     }
     if (e.target.classList.contains('selector-all')) {
         Array.from(e.target.parentNode.children).forEach(el => el.classList.remove('active'));
@@ -142,7 +141,9 @@ const setActiveSelector = (e) => {
         Array.from(e.target.parentNode.children).forEach(el => el.classList.remove('active'));
         e.target.classList.add('active');
         todoContainer.textContent = '';
+        console.log(todos)
         updateUI(todos.filter(el => el.isCompleted === false));
+
     }
 };
 

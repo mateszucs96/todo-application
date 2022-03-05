@@ -148,7 +148,13 @@ header {
     background: url('./images/icon-check.svg'), var(--primary-check-bg);
     background-repeat: no-repeat;
     background-position: center;
+    
 }
+
+.line {
+    text-decoration: line-through;
+}
+
 
 main {    
     padding: 0 1rem 2rem 1rem;
